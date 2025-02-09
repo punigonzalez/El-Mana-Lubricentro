@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.elmanalubricentro.ElMana.caja.entity.Caja;
 
-//import jakarta.persistence.Entity;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Cajero {
 
     @Id
@@ -30,7 +31,7 @@ public class Cajero {
 
     // ---------------------------------------------------------------------------
 
-    private List<Caja> cajas;
+   // private List<Caja> cajas;
     private boolean activo;
 
 
