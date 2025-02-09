@@ -1,11 +1,13 @@
+
 FROM eclipse-temurin:17-jdk AS builder
 WORKDIR /app
-COPY . .
-RUN ./gradlew clean build -x test
+COPY . /app  
+RUN ./gradlew bootJar --no-daemon
+
 
 FROM eclipse-temurin:17-jre
 WORKDIR /app
-COPY --from=build /app/target/*.jar /app.jar
+COPY --from=builder /app/build/libs/ElMana-0.0.1-SNAPSHOT.jar /app/ElMana-0.0.1-SNAPSHOT.jar 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/ElMana-0.0.1-SNAPSHOT.jar"] 
