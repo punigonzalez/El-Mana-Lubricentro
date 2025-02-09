@@ -2,7 +2,6 @@
 FROM eclipse-temurin:17-jdk AS builder
 WORKDIR /app
 COPY . /app  
-RUN ./gradlew clean build -x test
 
 
 FROM eclipse-temurin:17-jre
