@@ -47,5 +47,10 @@ public class CajeroController {
 
         return "Cajero eliminado correctamente";
     }
+
+    @GetMapping("/helloWorld")
+    public String helloWorld() {
+        return "Hello World!";
+    }
  
 }
