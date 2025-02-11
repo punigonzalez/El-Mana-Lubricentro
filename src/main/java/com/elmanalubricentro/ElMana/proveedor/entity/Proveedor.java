@@ -1,6 +1,7 @@
 package com.elmanalubricentro.ElMana.proveedor.entity;
 
 import com.elmanalubricentro.ElMana.producto.entity.Producto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class Proveedor {
     private String adress;
     private String note;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Producto> productos;
 

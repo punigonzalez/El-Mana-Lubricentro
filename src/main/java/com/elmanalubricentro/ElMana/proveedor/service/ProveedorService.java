@@ -33,7 +33,7 @@ public class ProveedorService {
 
     public Proveedor create(Proveedor p){
         if (iproveedorRepository.findByName(p.getName()).isPresent()) {
-            throw new IllegalArgumentException("El proveedor"+ p.getName() +"ya está registrado.");
+            throw new IllegalArgumentException("El proveedor "+ p.getName() +" ya está registrado.");
         }
         return iproveedorRepository.save(p);
     }
