@@ -17,6 +17,5 @@ public interface IProductRepository extends JpaRepository<Producto,Long> {
     // realiza una consulta sql que por cada producto, devuelve el p.nombre que coincida con el parametro pasado
     @Query("SELECT p FROM Producto p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<Producto> filterByName(@Param("name") String name);
-
 }
 
