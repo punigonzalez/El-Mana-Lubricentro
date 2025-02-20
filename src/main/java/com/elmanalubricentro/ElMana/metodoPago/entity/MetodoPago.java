@@ -20,8 +20,6 @@ public class MetodoPago {
     private Long id;
     private String nombre;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "metodoPago",cascade = CascadeType.ALL,orphanRemoval = true)
 
 
 
