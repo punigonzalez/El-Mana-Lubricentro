@@ -12,11 +12,6 @@ import java.util.Optional;
 @Repository
 public interface IMetodoPagoRepository extends JpaRepository<MetodoPago,Long> {
 
-    Optional<MetodoPago> findByName(String name);
-
-    // realiza una consulta sql que por cada producto, devuelve el p.nombre que coincida con el parametro pasado
-    @Query("SELECT m FROM MetodoPago m WHERE LOWER(m.name) LIKE LOWER(CONCAT('%', :name, '%'))")
-    List<MetodoPago> filterByName(@Param("name") String name);
 
 }
 
