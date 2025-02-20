@@ -26,7 +26,7 @@ public class Proveedor {
     private String note;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL)
     private List<Producto> productos;
 
 

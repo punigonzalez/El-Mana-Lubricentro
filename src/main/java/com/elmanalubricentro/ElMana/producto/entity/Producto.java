@@ -27,7 +27,7 @@ public class Producto {
     private String note;
 
     @ManyToOne
-    @JoinColumn(name = "proveedor_id", nullable = false)
+    @JoinColumn(name = "proveedor_id")
     private Proveedor proveedor;
 
 

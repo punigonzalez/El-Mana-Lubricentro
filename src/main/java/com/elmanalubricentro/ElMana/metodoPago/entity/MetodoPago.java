@@ -1,9 +1,12 @@
 package com.elmanalubricentro.ElMana.metodoPago.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.lang.reflect.Type;
 
 
 @Entity
@@ -16,6 +19,11 @@ public class MetodoPago {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "metodoPago",cascade = CascadeType.ALL,orphanRemoval = true)
+
+
 
 
 
