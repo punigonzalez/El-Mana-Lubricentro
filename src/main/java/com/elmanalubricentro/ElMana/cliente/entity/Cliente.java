@@ -1,6 +1,7 @@
 package com.elmanalubricentro.ElMana.cliente.entity;
 
 
+import com.elmanalubricentro.ElMana.venta.entity.Venta;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,8 +26,8 @@ public class Cliente {
     private String email;
 
     // descomentar cuando se cree entidad ventas
-    /*@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Venta> ventas;*/
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Venta> ventas;
 
 
 

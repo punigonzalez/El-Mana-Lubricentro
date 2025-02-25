@@ -1,66 +1,112 @@
 package com.elmanalubricentro.ElMana.producto.service;
 
+import com.elmanalubricentro.ElMana.producto.entity.ProductoDTO;
 import com.elmanalubricentro.ElMana.producto.entity.Producto;
 import com.elmanalubricentro.ElMana.producto.repository.IProductRepository;
 import com.elmanalubricentro.ElMana.proveedor.entity.Proveedor;
-import org.springframework.beans.BeanUtils;
+import com.elmanalubricentro.ElMana.proveedor.repository.IProveedorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductoService {
 
-    private final IProductRepository productRepository;
+    @Autowired
+    private IProductRepository productoRepository;
 
-    public ProductoService(IProductRepository productRepository) {
-        this.productRepository = productRepository;
+    @Autowired
+    private IProveedorRepository proveedorRepository;
+
+    // Obtener un producto por ID
+    public ProductoDTO getProductoById(Long id) {
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Producto con ID " + id + " no encontrado"));
+
+        return convertToDTO(producto);
     }
 
-
-    public Optional<Producto> getById(Long id){
-        return productRepository.findById(id);
+    // Obtener todos los productos
+    public List<ProductoDTO> getAllProductos() {
+        return productoRepository.findAll().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<Producto> getAll(){
-        return productRepository.findAll();
+    // Crear un nuevo producto
+    public ProductoDTO createProducto(ProductoDTO productoDTO) {
+        Producto producto = convertToEntity(productoDTO);
+        Producto savedProducto = productoRepository.save(producto);
+        return convertToDTO(savedProducto);
     }
 
-    public Optional<Producto> getByName(String name){
-        return productRepository.findByName(name);
-    }
-
-    public Producto create(Producto p){
-        if (productRepository.findByName(p.getName()).isPresent()) {
-            throw new IllegalArgumentException("El producto "+ p.getName() +" ya está registrado.");
+    // Actualizar un producto existente
+    public ProductoDTO updateProducto(Long id, ProductoDTO productoDTO) {
+        if (!productoRepository.existsById(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Producto con ID " + id + " no encontrado");
         }
-        return productRepository.save(p);
+
+        Producto producto = convertToEntity(productoDTO);
+        producto.setId(id); // Asegurar que el ID sea el correcto
+        Producto updatedProducto = productoRepository.save(producto);
+        return convertToDTO(updatedProducto);
     }
 
-    public void deleteById(Long id){
-        productRepository.deleteById(id);
+    // Eliminar un producto
+    public void deleteProducto(Long id) {
+        if (!productoRepository.existsById(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Producto con ID " + id + " no encontrado");
+        }
+        productoRepository.deleteById(id);
     }
 
-    public Producto update(Long id, Producto p) {
-        // Busca el producto existente en la base de datos
-        Producto newProducto = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+    // Convertir Producto a ProductoDTO
+    private ProductoDTO convertToDTO(Producto producto) {
+        ProductoDTO dto = new ProductoDTO();
+        dto.setId(producto.getId());
+        dto.setName(producto.getName());
+        dto.setDescription(producto.getDescription());
+        dto.setBrand(producto.getBrand());
+        dto.setCost(producto.getCost());
+        dto.setPrice(producto.getPrice());
+        dto.setStock(producto.getStock());
+        dto.setNote(producto.getNote());
 
-        // Copia solo las propiedades NO nulas de p a producto, excluyendo el campo id
-        BeanUtils.copyProperties(p, newProducto, "id");
+        // Solo establecer el ID del proveedor, no todo el objeto
+        if (producto.getProveedor() != null) {
+            dto.setProveedorId(producto.getProveedor().getId());
+        }
 
-        // Guarda el usuario actualizado en la base de datos
-        return productRepository.save(newProducto);
+        return dto;
     }
 
+    // Convertir ProductoDTO a Producto
+    private Producto convertToEntity(ProductoDTO dto) {
+        Producto producto = new Producto();
+        producto.setId(dto.getId());
+        producto.setName(dto.getName());
+        producto.setDescription(dto.getDescription());
+        producto.setBrand(dto.getBrand());
+        producto.setCost(dto.getCost());
+        producto.setPrice(dto.getPrice());
+        producto.setStock(dto.getStock());
+        producto.setNote(dto.getNote());
 
-    //filter
-    public List<Producto> filterByName(String name){
-        return productRepository.filterByName(name);
+        // Establecer el proveedor si se proporciona un ID
+        if (dto.getProveedorId() != null) {
+            Proveedor proveedor = proveedorRepository.findById(dto.getProveedorId())
+                    .orElseThrow(() -> new ResponseStatusException(
+                            HttpStatus.NOT_FOUND, "Proveedor con ID " + dto.getProveedorId() + " no encontrado"));
+            producto.setProveedor(proveedor);
+        }
+
+        return producto;
     }
-
-
-
-
 }
