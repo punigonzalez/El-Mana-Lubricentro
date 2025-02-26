@@ -7,4 +7,5 @@ import com.elmanalubricentro.ElMana.cajero.entity.Cajero;
 
 @Repository
 public interface ICajeroRepository extends JpaRepository<Cajero, Long>{
+
 }
