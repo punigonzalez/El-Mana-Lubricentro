@@ -32,6 +32,22 @@ public class ProveedorService {
     }
 
     public Proveedor create(Proveedor p){
+
+        // Validar que name no sea null
+        if (p.getName() == null) {
+            throw new IllegalArgumentException("El nombre del proveedor no puede ser null");
+        }
+
+        // Validar que name no sea un número
+        try {
+            Double.parseDouble(p.getName());
+            // Si llegamos aquí, significa que el nombre es un número
+            throw new IllegalArgumentException("El nombre del proveedor no puede ser un número");
+        } catch (NumberFormatException e) {
+            // Es correcto que lance esta excepción, significa que no es un número
+        }
+
+
         if (iproveedorRepository.findByName(p.getName()).isPresent()) {
             throw new IllegalArgumentException("El proveedor "+ p.getName() +" ya está registrado.");
         }
