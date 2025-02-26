@@ -20,7 +20,7 @@ public class MetodoPago {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nombre;
+    private String name;
 
     @JsonIgnore
     @OneToMany(mappedBy = "metodoPago",cascade = CascadeType.ALL,orphanRemoval = true)

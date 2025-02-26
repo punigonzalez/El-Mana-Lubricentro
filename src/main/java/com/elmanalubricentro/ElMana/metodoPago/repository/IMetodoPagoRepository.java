@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface IMetodoPagoRepository extends JpaRepository<MetodoPago,Long> {
+    boolean existsByName(String name);
 
 
 }
