@@ -1,6 +1,8 @@
 package com.elmanalubricentro.ElMana.cajero.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,38 +11,39 @@ import com.elmanalubricentro.ElMana.cajero.entity.Cajero;
 import com.elmanalubricentro.ElMana.cajero.repository.ICajeroRepository;
 
 @Service
-public class CajeroService implements ICajeroService{
+public class CajeroService {
 
     @Autowired
     private ICajeroRepository cajeroRepository;
 
-    @Override
     public List<Cajero> getCajeros() {
-        return cajeroRepository.findAll();
-    }
+        List<Cajero> cajeros = cajeroRepository.findAll();
+        List<Cajero> cajerosActivos = new ArrayList<>();
 
-    @Override
-    public void saveCajero(Cajero cajero) {
-        cajeroRepository.save(cajero);
-    }
-
-    @Override
-    public void deleteCajero(Long id) {
+        for(Cajero cajero : cajeros) {
+            if(cajero.isActivo())
+                cajerosActivos.add(cajero);
+        }
         
-        Cajero cajeroAEliminar = this.findCajero(id);
-
-        cajeroAEliminar.setActivo(false);
-
-        this.saveCajero(cajeroAEliminar);
+        return cajerosActivos;
     }
 
-    @Override
-    public Cajero findCajero(Long id) {
-        return cajeroRepository.findById(id).orElse(null);
+    public Cajero saveCajero(Cajero cajero) {
+        return cajeroRepository.save(cajero);
     }
 
-    @Override
-    public void editCajero(Cajero cajero) {
-        this.saveCajero(cajero);
+    public void deleteCajero(Long id) {
+        this.getById(id).ifPresent(cajero -> {
+            cajero.setActivo(false);
+            this.saveCajero(cajero);
+        });
+    }
+
+    public Optional<Cajero> getById(Long id) {
+        return cajeroRepository.findById(id);
+    }
+
+    public Cajero editCajero(Cajero cajero) {
+        return this.saveCajero(cajero);
     }
 }

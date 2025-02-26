@@ -2,6 +2,8 @@ package com.elmanalubricentro.ElMana.cajero.entity;
 
 import java.util.List;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.elmanalubricentro.ElMana.caja.entity.Caja;
 
 import jakarta.persistence.Entity;
