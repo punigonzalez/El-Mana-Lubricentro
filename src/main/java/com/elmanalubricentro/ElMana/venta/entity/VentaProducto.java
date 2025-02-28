@@ -2,9 +2,7 @@ package com.elmanalubricentro.ElMana.venta.entity;
 
 import com.elmanalubricentro.ElMana.producto.entity.Producto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -28,7 +26,7 @@ public class VentaProducto {
     @ManyToOne
     @JoinColumn(name = "producto_id", nullable = false)
     private Producto producto;
-    //
+
 
 
 }

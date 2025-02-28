@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/clientes")
+@RequestMapping("/api/clientes")
 
 public class ClienteController {
     @Autowired
@@ -60,7 +60,7 @@ public class ClienteController {
 
 
 
-    @GetMapping("/lista")
+    @GetMapping
     public ResponseEntity<?> getAllClientes() {
         try {
             List<Cliente> clientes = clienteService.getAll();

@@ -5,19 +5,15 @@ import com.elmanalubricentro.ElMana.metodoPago.entity.MetodoPago;
 import com.elmanalubricentro.ElMana.producto.entity.Producto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 import java.util.Set;
 
 @Entity
-@Data @NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor @AllArgsConstructor
 @Table(name="ventas")
-
 public class Venta {
 //
     @Id
@@ -34,6 +30,7 @@ public class Venta {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
+    @JsonIgnore
     private Cliente cliente;
 
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)

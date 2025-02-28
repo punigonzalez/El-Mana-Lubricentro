@@ -5,17 +5,15 @@ import com.elmanalubricentro.ElMana.venta.entity.Venta;
 import com.elmanalubricentro.ElMana.venta.entity.VentaProducto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-@Data @NoArgsConstructor @AllArgsConstructor
-@Table(name="productos")
+@NoArgsConstructor @AllArgsConstructor
+@Table(name = "productos")
 
 public class Producto {
 
@@ -34,7 +32,7 @@ public class Producto {
     @JoinColumn(name = "proveedor_id")
     private Proveedor proveedor;
 
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private Set<VentaProducto> ventaProductos;
 
 }
