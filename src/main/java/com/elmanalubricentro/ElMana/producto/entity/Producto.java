@@ -8,13 +8,13 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-@NoArgsConstructor @AllArgsConstructor
+@Data @NoArgsConstructor @AllArgsConstructor
 @Table(name = "productos")
-
 public class Producto {
 
     @Id
@@ -32,7 +32,7 @@ public class Producto {
     @JoinColumn(name = "proveedor_id")
     private Proveedor proveedor;
 
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private Set<VentaProducto> ventaProductos;
 
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
+    private Set<VentaProducto> ventaProductos = new HashSet<>(); // Inicializar el Set
 }

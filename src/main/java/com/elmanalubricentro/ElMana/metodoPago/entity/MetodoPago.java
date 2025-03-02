@@ -22,6 +22,7 @@ public class MetodoPago {
     private Long id;
     private String name;
 
+
     @JsonIgnore
     @OneToMany(mappedBy = "metodoPago",cascade = CascadeType.ALL,orphanRemoval = true)
     public List<Venta> ventas;

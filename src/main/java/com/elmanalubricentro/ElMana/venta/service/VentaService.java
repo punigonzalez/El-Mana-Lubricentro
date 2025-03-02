@@ -107,9 +107,13 @@ public class VentaService {
                     HttpStatus.BAD_REQUEST, "Debe proporcionar al menos un producto para la venta");
         }
 
+        // Crear una nueva colección para los productos de la venta
         Set<VentaProducto> ventaProductos = new HashSet<>();
 
-        for (ProductoVentaDTO productoDTO : productosDTO) {
+        // Clonar el conjunto de productosDTO para evitar modificaciones concurrentes
+        Set<ProductoVentaDTO> productosDTOClonado = new HashSet<>(productosDTO);
+
+        for (ProductoVentaDTO productoDTO : productosDTOClonado) {
             // Obtener el producto
             Producto producto = productoRepository.findById(productoDTO.getProductoId())
                     .orElseThrow(() -> new ResponseStatusException(
@@ -136,11 +140,13 @@ public class VentaService {
             // Usar el precio actual del producto
             ventaProducto.setPrecioUnitario(producto.getPrice());
 
+            // Agregar el VentaProducto al conjunto
             ventaProductos.add(ventaProducto);
         }
 
         return ventaProductos;
     }
+
 
     private Double calcularTotal(Set<VentaProducto> ventaProductos) {
         double total = 0.0;

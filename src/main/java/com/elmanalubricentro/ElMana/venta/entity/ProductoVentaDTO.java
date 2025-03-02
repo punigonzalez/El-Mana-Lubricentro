@@ -11,3 +11,5 @@ public class ProductoVentaDTO {
     private Long productoId;
     private Integer cantidad;
 }
+
+

@@ -109,4 +109,13 @@ public class ProductoService {
 
         return producto;
     }
+
+    public void restarStock(Integer cantidad){
+
+
+    }
+
+
+
+
 }

@@ -4,6 +4,7 @@ import com.elmanalubricentro.ElMana.cliente.entity.Cliente;
 import com.elmanalubricentro.ElMana.metodoPago.entity.MetodoPago;
 import com.elmanalubricentro.ElMana.producto.entity.Producto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +13,7 @@ import java.time.LocalTime;
 import java.util.Set;
 
 @Entity
-@NoArgsConstructor @AllArgsConstructor
+@Data @NoArgsConstructor @AllArgsConstructor
 @Table(name="ventas")
 public class Venta {
 //
@@ -34,6 +35,7 @@ public class Venta {
     private Cliente cliente;
 
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference // Serializa esta propiedad
     private Set<VentaProducto> ventaProductos;
 
 
