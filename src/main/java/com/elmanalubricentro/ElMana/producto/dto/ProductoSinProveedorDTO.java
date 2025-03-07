@@ -1,22 +1,22 @@
-package com.elmanalubricentro.ElMana.producto.entity;
+package com.elmanalubricentro.ElMana.producto.dto;
+
+import java.math.BigDecimal;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class ProductoDTO {
-    private Long id;
-    private String name;
+@NoArgsConstructor
+public class ProductoSinProveedorDTO {
+    
+    private Long id_producto;
+    private String producto_name;
     private String description;
     private String brand;
     private BigDecimal cost;
     private BigDecimal price;
     private Integer stock;
-    private String note;
-    private Long proveedorId;
+    private String producto_note;
 }

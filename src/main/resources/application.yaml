@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/elmana
     username: root
-    password: penaldo10
+    password: 
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:

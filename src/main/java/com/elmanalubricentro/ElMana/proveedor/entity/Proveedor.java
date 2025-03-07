@@ -17,18 +17,17 @@ public class Proveedor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
+    private Long id_proveedor;
+    private String proveedor_name;
     private String email;
     private String phone;
     private String whatsapp;
     private String adress;
-    private String note;
+    private String proveedor_note;
+    private boolean proveedor_activo;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "proveedores", cascade = CascadeType.ALL)
     private List<Producto> productos;
-
-
 
 }

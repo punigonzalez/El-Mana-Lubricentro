@@ -5,7 +5,7 @@ import com.elmanalubricentro.ElMana.cliente.repository.ClienteRepository;
 import com.elmanalubricentro.ElMana.metodoPago.entity.MetodoPago;
 import com.elmanalubricentro.ElMana.metodoPago.repository.IMetodoPagoRepository;
 import com.elmanalubricentro.ElMana.producto.entity.Producto;
-import com.elmanalubricentro.ElMana.producto.repository.IProductRepository;
+import com.elmanalubricentro.ElMana.producto.repository.IProductoRepository;
 import com.elmanalubricentro.ElMana.venta.entity.ProductoVentaDTO;
 import com.elmanalubricentro.ElMana.venta.entity.Venta;
 import com.elmanalubricentro.ElMana.venta.entity.VentaProducto;
@@ -29,11 +29,11 @@ public class VentaService {
 
 
     private final VentaRepository ventaRepository;
-    private final IProductRepository productoRepository;
+    private final IProductoRepository productoRepository;
     private final ClienteRepository clienteRepository;
     private final IMetodoPagoRepository metodoPagoRepository;
 
-    public VentaService(VentaRepository ventaRepository, IProductRepository productRepository, ClienteRepository clienteRepository, IMetodoPagoRepository metodoPagoRepository) {
+    public VentaService(VentaRepository ventaRepository, IProductoRepository productRepository, ClienteRepository clienteRepository, IMetodoPagoRepository metodoPagoRepository) {
         this.ventaRepository = ventaRepository;
         this.productoRepository = productRepository;
         this.clienteRepository = clienteRepository;
@@ -119,7 +119,7 @@ public class VentaService {
             if (producto.getStock() < productoDTO.getCantidad()) {
                 throw new ResponseStatusException(
                         HttpStatus.BAD_REQUEST,
-                        "Stock insuficiente para el producto " + producto.getName() +
+                        "Stock insuficiente para el producto " + producto.getProducto_name() +
                                 ". Disponible: " + producto.getStock() + ", Solicitado: " + productoDTO.getCantidad());
             }
 
